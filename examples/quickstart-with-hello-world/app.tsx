@@ -1,4 +1,4 @@
-import { ServiceProvider } from "../../components/ServiceProvider";
+import { ServiceProvider } from "../../src";
 import SayHello from "./components/say-hello.component";
 import { services } from "./core/registry";
 

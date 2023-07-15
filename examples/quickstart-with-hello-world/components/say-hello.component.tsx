@@ -1,5 +1,5 @@
 
-import { useProvider } from "../../../core/reprovider";
+import { useProvider } from "../../../src/core/reprovider";
 import { GreetsService } from "../core/services/greets.service";
 
 /**

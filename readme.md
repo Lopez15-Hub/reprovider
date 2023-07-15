@@ -106,7 +106,7 @@ export default SayHello;
 
 ## Examples
 
-You can view the examples follow this [link](https://github.com/Lopez15-Hub/reprovider/tree/master/src/examples):
+You can view the examples follow this [link](https://github.com/Lopez15-Hub/reprovider/tree/master/examples):
 
 # Reprovider Flow
 
