@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./examples/quickstart-with-hello-world/app";
+import App from "./quickstart-with-hello-world/app";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
