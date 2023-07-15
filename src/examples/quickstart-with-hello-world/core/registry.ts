@@ -1,6 +1,7 @@
-import { Service } from "../../../core/interfaces/service.interface";
+
 import { GreetsService } from "./services/greets.service";
 import { GreetsRepository } from "./repository/greets.repository";
+import { Service } from "../../../core/reprovider";
 
 
 

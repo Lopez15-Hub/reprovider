@@ -1,4 +1,5 @@
-import useProvider from "../../../hook/useProvider/useProvider.hook";
+
+import { useProvider } from "../../../core/reprovider";
 import { GreetsService } from "../core/services/greets.service";
 
 /**
