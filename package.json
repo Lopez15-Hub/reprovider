@@ -1,7 +1,7 @@
 {
   "name": "reprovider",
   "description": "A minimalist package created created for manage services using depedency injection easly and quickly.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "keywords": [
     "TypeScript",
@@ -11,7 +11,7 @@
     "react"
   ],
   "author": "Ezequiel López",
-  "license": "GNU",
+  "license": "GPL-3.0",
   "scripts": {
   "build": "tsc && cp README.md dist/ && cp package.json dist/ && cp LICENSE dist/"
 },
