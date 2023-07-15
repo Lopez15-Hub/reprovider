@@ -11,7 +11,7 @@
     "react"
   ],
   "author": "Ezequiel López",
-  "license": "ISC",
+  "license": "GNU",
   "scripts": {
   "build": "tsc && cp README.md dist/ && cp package.json dist/ && cp LICENSE dist/"
 },
