@@ -5,3 +5,5 @@
 dist/*
 !dist/**/*
 !dist/src/
+!how-it-works.png
+!logo.png

@@ -1,4 +1,4 @@
-![Texto alternativo](./image/readme/1689399989502.png)
+![Texto alternativo](./logo.png)
 
 # Reprovider
 
@@ -12,15 +12,23 @@ Reprovider is designed for developers that want get a quickly and organized stor
 
 With reprovider we can create services and consume into a component or outside of it.
 
+## How it works
+
+![Texto alternativo](./how-it-works.png)
+
 # Quick start
 
-### Install reprovider:
+### Install
 
 with npm:
 
 ```powershell
     npm i reprovider
 ```
+
+### Using Reprovider
+
+First create the repository, it can contains the interacions with an A.P.I or Database.
 
 _greets.repository.ts_
 
@@ -30,6 +38,8 @@ export class GreetsRepository {
   goodBay = () => "Goodbay ";
 }
 ```
+
+Now create the service and inject the repository into constructor.
 
 _greets.service.ts_
 
@@ -43,6 +53,10 @@ export class GreetsService {
     `${this.repository.goodBay()} World From Reprovider`;
 }
 ```
+
+Its time to create the registry file. 
+
+It contains all services with its dependencies that will register into ServiceProvider
 
 _registry.ts_
 
@@ -59,6 +73,13 @@ export const services: Service[] = [
   },
 ];
 ```
+
+Once do you configure the services and declared into registry file. FInally we can inject the services into the app.
+
+For that, add the ServiceProvider at the top of the app.
+
+The service provided will be responsible of create the context that we will using later calling the useProvider hook.
+
 
 _app.tsx_
 
@@ -78,10 +99,21 @@ const App = (): JSX.Element => {
 export default App;
 ```
 
+
+### Say hello with useProvider
+
+
+Finally, just import the useProvider, pass the reference of Service that you wan use and desestructure the provider to use.
+
+Optional: You can rename the provider as you want. This is recommended for understand the code better.
+
+
 _say-hello.component.tsx_
 
 ```typescript
+import { useProvider } from "../../../src/core/reprovider";
 import { GreetsService } from "../core/services/greets.service";
+
 
 /**
  * Show a simple hello world
@@ -104,10 +136,8 @@ const SayHello = () => {
 export default SayHello;
 ```
 
+
+
 ## Examples
 
-You can view the examples follow this [link](https://github.com/Lopez15-Hub/reprovider/tree/master/examples):
-
-# Reprovider Flow
-
-![Texto alternativo](./image/readme/1689397687700.png)
+You can view the examples follow this  *[link](https://github.com/Lopez15-Hub/reprovider/tree/master/examples)*
