@@ -1,5 +1,6 @@
 import { Service } from "./interfaces/service.interface";
 import Provider from "./provider";
+import { Logs } from "./services/logs.service";
 
 /**
  * Class responsible for registering and consuming services.
@@ -12,6 +13,13 @@ export class Consumer {
    * @param {Service[]} services - Service to register.
    */
   constructor(services: Service[]) {
+    if (services.length === 0)
+      Logs.showError({
+        message: "The consumer doesn't have services.",
+        error: "CONSUMER_SERVICES_EMPTY",
+        onFunction: "Consumer.constructor",
+        onFile: "consumer.ts",
+      });
     this.context = Provider.createContext();
     services.forEach((service) =>
       this.context.register(service.service, service.dependencies)
