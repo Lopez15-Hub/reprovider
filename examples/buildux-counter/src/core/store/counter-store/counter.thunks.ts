@@ -6,6 +6,6 @@ thunksRegistry((context) => [
     context,
     description: "Get user from API",
     reference: "users/createUser",
-    action: async (context, args) => {},
+    action: async (_context, _args) => {},
   }),
 ]);

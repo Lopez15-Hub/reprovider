@@ -1,6 +1,5 @@
 import { Buildux } from "../../../../../../src/core/redux/buildux";
 import { CounterState } from "../../interfaces/counter-state.interface";
-import { builduxThunk } from "../../../../../../src/core/redux/buildux.thunk";
 
 /**
  * Buildux creates a new Slice and then returns a context.
@@ -23,7 +22,7 @@ const { context, thunksRegistry } = new Buildux<CounterState>({
     },
   },
   extraReducers(builder) {
-    builder.addCase(context.thunks[0].fulfilled, (state, action) => {
+    builder.addCase(context.thunks[0].fulfilled, (_state, action) => {
       action.payload;
     });
   },
