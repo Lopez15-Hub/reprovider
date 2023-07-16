@@ -27,9 +27,9 @@ export class Buildux<T> {
     this.context.consumer = new Consumer(services);
   };
   thunksRegistry = (
-    thunks: (context: BuilduxContext<T>) => AsyncThunk<any, any, {}>[]
+    thunks: (context: BuilduxContext<T>) => AsyncThunk<any, any, any>[]
   ) => {
-    this.context.thunks = thunks;
+    this.context.thunks = thunks(this.context);
     return this;
   };
   static createApi = (
