@@ -1,3 +1,4 @@
+import { AsyncThunk } from "@reduxjs/toolkit";
 import { Service } from "./service.interface";
 
 export interface SliceCreator<T> {

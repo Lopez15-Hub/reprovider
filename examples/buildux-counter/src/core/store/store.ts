@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {counterReducer} from "./counter-store/counter.buildux";
 
-// ...
 
 export const store = configureStore({
   reducer: {
