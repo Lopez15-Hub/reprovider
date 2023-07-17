@@ -1,8 +1,5 @@
-import { BuilduxContext } from "../redux/buildux.context";
-
-export interface BuilduxThunkOptions<T> {
+export interface BuilduxThunkOptions {
   description: string;
   reference: string;
-  action: (context: BuilduxContext<T>, arg: any) => Promise<any>;
-  context: BuilduxContext<T>;
+  action: () => Promise<any>;
 }

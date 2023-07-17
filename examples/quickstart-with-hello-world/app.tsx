@@ -1,4 +1,5 @@
-import { ServiceProvider } from "../../src";
+import React from "react";
+import { ServiceProvider } from "reprovider";
 import SayHello from "./components/say-hello.component";
 import { services } from "./core/registry";
 

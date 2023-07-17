@@ -1,6 +1,5 @@
-import { Buildux } from "../../../../../../src/core/redux/buildux";
+import { Buildux } from "reprovider";
 import { CounterState } from "../../interfaces/counter-state.interface";
-
 /**
  * Buildux creates a new Slice and then returns a context.
  * The context contains the reducer, actions and services
@@ -8,10 +7,9 @@ import { CounterState } from "../../interfaces/counter-state.interface";
  * For create the state only we need pass the reference like this:
  * new Buildux<MyCurrentState>({})
  */
-const { context, thunksRegistry } = new Buildux<CounterState>({
+const { context } = new Buildux<CounterState>({
   name: "counter",
   initialState: { value: 0 },
-  services: [],
 }).createReducers({
   reducers: {
     increment: (state) => {
@@ -21,13 +19,7 @@ const { context, thunksRegistry } = new Buildux<CounterState>({
       state.value -= 1;
     },
   },
-  extraReducers(builder) {
-    builder.addCase(context.thunks[0].fulfilled, (_state, action) => {
-      action.payload;
-    });
-  },
 });
 
-export { thunksRegistry };
 export const { increment, decrement } = context.actions;
 export const counterReducer = context.reducer;

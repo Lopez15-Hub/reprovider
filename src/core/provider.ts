@@ -2,6 +2,8 @@ import { ProviderContext } from "./provider.context";
 
 /**
  * Acts like a Service provider
+ * @class Provider
+ * @author Ezequiel López
  */
 export default class Provider {
   /**

@@ -3,4 +3,5 @@ export interface ErrorLogOptions {
   onFunction?: string;
   onFile?: string;
   error?: string;
+  throw?: boolean;
 }

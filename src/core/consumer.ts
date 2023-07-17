@@ -4,6 +4,8 @@ import { Logs } from "./services/logs.service";
 
 /**
  * Class responsible for registering and consuming services.
+ * @class Consumer
+ * @author Ezequiel López
  */
 export class Consumer {
   private context: Provider;
@@ -15,10 +17,11 @@ export class Consumer {
   constructor(services: Service[]) {
     if (services.length === 0)
       Logs.showError({
-        message: "The consumer doesn't have services.",
+        message: " [WARNING] The consumer doesn't have services.",
         error: "CONSUMER_SERVICES_EMPTY",
         onFunction: "Consumer.constructor",
         onFile: "consumer.ts",
+        throw: false,
       });
     this.context = Provider.createContext();
     services.forEach((service) =>

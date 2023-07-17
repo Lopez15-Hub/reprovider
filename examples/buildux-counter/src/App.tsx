@@ -1,4 +1,3 @@
-import reactLogo from "./assets/react.svg";
 import reproviderLogo from "./assets/reprovider_logo.png";
 import "./App.css";
 import { useAppSelector, useAppDispatch } from "./core/hooks/hooks";
@@ -14,8 +13,13 @@ function App() {
     <>
       <div>
         <img src={reproviderLogo} className="logo" alt="Reprovider logo" />
-
-        <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href="https://redux-toolkit.js.org/">
+          <img
+            src="https://redux-toolkit.js.org/img/redux.svg"
+            className="logo Redux Toolkit"
+            alt="Redux toolkit logo"
+          />
+        </a>
       </div>
       <h1>Reprovider + Redux Example</h1>
       <div className="card">

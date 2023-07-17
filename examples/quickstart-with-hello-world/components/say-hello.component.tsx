@@ -1,10 +1,10 @@
-
-import { useProvider } from "../../../src/core/reprovider";
+import React from "react";
+import { useProvider } from "reprovider";
 import { GreetsService } from "../core/services/greets.service";
 
 /**
  * Show a simple hello world
- *  
+ *
  */
 const SayHello = () => {
   /**
