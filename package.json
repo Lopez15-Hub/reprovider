@@ -1,7 +1,7 @@
 {
   "name": "reprovider",
   "description": "A minimalist package created created for manage services using depedency injection easly and quickly.",
-  "version": "1.0.2-first",
+  "version": "1.0.3-first",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

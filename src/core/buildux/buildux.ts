@@ -48,7 +48,6 @@ export class Buildux<T> {
   ) => {
     const thunks = registerThunksCallback(context);
     this.context.thunks = thunks;
-    console.log(this.context.thunks);
     return this;
   };
 
