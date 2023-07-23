@@ -1,4 +1,4 @@
-import { Buildux } from "../../../../../../src/index";
+import { Buildux } from "reprovider";
 import { UsersState } from "../../interfaces/users-state.interface";
 import { services } from "./users-services.registry";
 import { userThunksRegistry } from "./users-thunks.registry";

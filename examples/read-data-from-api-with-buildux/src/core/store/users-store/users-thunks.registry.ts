@@ -1,4 +1,4 @@
-import { BuilduxContext, builduxThunk } from "../../../../../../src/index";
+import { BuilduxContext, builduxThunk } from "reprovider";
 import { User } from "../../interfaces/user.interface";
 import { UsersService } from "../../services/users.service";
 
