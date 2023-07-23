@@ -1,3 +1,5 @@
+import { User } from "../interfaces/user.interface";
+
 export class UsersRepository {
   private readonly baseUrl: string;
   constructor(private readonly http: HttpAdapter) {
@@ -5,6 +7,6 @@ export class UsersRepository {
   }
 
   async readAll() {
-    return await this.http.get(this.baseUrl);
+    return await this.http.get<User[]>(this.baseUrl);
   }
 }

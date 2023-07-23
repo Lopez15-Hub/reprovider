@@ -14,6 +14,10 @@ With reprovider we can create services and consume into a component or outside o
 
 Reprovider supports Redux for inject services into reducers and thunks. If you want use reprovider with redux, Read this [section](#buildux)
 
+## Full docs
+
+Read the latest full docs [here](https://lopez15-hub.github.io/reprovider-docs/)
+
 ## How it works
 
 ![Texto alternativo](./how-it-works.png)
@@ -160,9 +164,7 @@ counter-state.interface.ts
 ```typescript
 export interface CounterState {
   value: number;
-  
 }
-
 ```
 
 Now, create the buildux file, import the state, and pass the state type to the instance. This will return a context that you will use later in reducers.
@@ -176,8 +178,7 @@ import { CounterState } from "../../interfaces/counter-state.interface";
 const { context } = new Buildux<CounterState>({
   name: "counter",
   initialState: { value: 0 },
-})
-
+});
 ```
 
 After created the Buildux instance, we need create the reducers. For that, use the createReducers method:
@@ -198,8 +199,6 @@ const { context } = new Buildux<CounterState>({
     },
   },
 });
-
-
 ```
 
 then exports the actions created from reducers and the reducer from context:
@@ -247,7 +246,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </Provider>
   </React.StrictMode>
 );
-
 ```
 
 For consume the reducers and dispatch actions we need create these hooks:
@@ -266,7 +264,6 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 
 //Read the state
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
 ```
 
 Now, we are ready to use the states and actions. For that, import the hooks in the component and use the hooks as follows:
@@ -275,7 +272,7 @@ app.tsx
 
 ```typescript
 const count = useAppSelector((state) => state.counter.value);
-  const dispatch = useAppDispatch();
+const dispatch = useAppDispatch();
 ```
 
 app.tsx
@@ -318,7 +315,6 @@ function App() {
 }
 
 export default App;
-
 ```
 
 You can read the complete example reading [here](https://github.com/Lopez15-Hub/reprovider/tree/master/examples/buildux-counter)
@@ -332,18 +328,18 @@ Buildux provide a custom thunk for asincronus calls and it's an implementation o
 Creating a BuilduxThunk
 
 ```typescript
-
 import { builduxThunk } from "reprovider";
 
-builduxThunk<User[], void>({
-    description: "Get user from API",
-    reference: "/users",
-    action: async () => {
-      const usersService = context.consumer.get(UsersService);
-      const users = await usersService.getUsers();
-      return users;
-    },
-  }),
+builduxThunk<User[], ActionArgument>({
+  // You can infer the type of the 'action' parameter here if it has one.
+  description: "Get user from API",
+  reference: "/users",
+  action: async () => {
+    const usersService = context.consumer.get(UsersService);
+    const users = await usersService.getUsers();
+    return users;
+  },
+});
 ```
 
 For use the thunk we need register into thunkRegistry method that it's provided when we create the Buildux instance
@@ -351,18 +347,21 @@ For use the thunk we need register into thunkRegistry method that it's provided 
 users.buildux.ts
 
 ```typescript
-const { context, thunksRegistry } = new Buildux<UsersState>({
+const { context, thunksRegistry, createReducers } = new Buildux<
+  UsersState,
+  UsersThunks
+>({
   name: "users",
   services,
   initialState: {
     users: [],
   },
 });
-//... Rest of code
 
-//Register a new thunk.
-thunksRegistry(context, (context) => [
-  builduxThunk<User[], void>({
+createReducers(usersReducers);
+
+thunksRegistry(context, (context) => ({
+  fetchUsers: builduxThunk<User[]>({
     description: "Get user from API",
     reference: "/users",
     action: async () => {
@@ -371,7 +370,7 @@ thunksRegistry(context, (context) => [
       return users;
     },
   }),
-]);
+}));
 ```
 
 also we can declare our thunks out of our buildux file and the pass the reference into thunksRegistry.
@@ -379,8 +378,8 @@ also we can declare our thunks out of our buildux file and the pass the referenc
 users-thunks.registry.ts
 
 ```typescript
-export const userThunksRegistry = <T>(context: BuilduxContext<T>) => [
-  builduxThunk<User[], void>({
+export const userThunksRegistry = <T>(context: BuilduxContext<T>) => ({
+  fetchUsers: builduxThunk<User[]>({
     description: "Get user from API",
     reference: "/users",
     action: async () => {
@@ -389,7 +388,7 @@ export const userThunksRegistry = <T>(context: BuilduxContext<T>) => [
       return users;
     },
   }),
-];
+});
 ```
 
 then we can import it into buildux file.
@@ -403,23 +402,10 @@ const { context, thunksRegistry } = new Buildux<UsersState>({
   initialState: {
     users: [],
   },
-}).createReducers({
-  reducers: {
-    setUsers: (state, payload: PayloadAction<User[]>) => {
-      state.users = payload.payload;
-    },
-  },
-  extraReducers(builder: ActionReducerMapBuilder<UsersState>) {
-    builder.addCase(
-      context.thunks[0].fulfilled,
-      (state, { payload }: PayloadAction<User[]>) => {
-        if (payload) state.users = payload;
-        console.log(state.users);
-      }
-    );
-  },
 });
+createReducers(usersReducers);
 
+//Imported here
 thunksRegistry(context, userThunksRegistry);
 ```
 
@@ -456,7 +442,7 @@ export const services: Service[] = [
 users.buildux.ts
 
 ```typescript
-import { services } from './registry'
+import { services } from "./registry";
 
 const { context } = new Buildux<UsersState>({
   name: "users",
@@ -468,31 +454,27 @@ const { context } = new Buildux<UsersState>({
   },
 }).createReducers({
   getUsers: (state) => {
-    const service = context.consumer.get(MyService)
+    const service = context.consumer.get(MyService);
     // Do something with your service...
-    state.value += 1;
-
   },
-
 });
 ```
 
 ### Consuming services into a thunk
 
 ```typescript
-//Register a new thunk.
-thunksRegistry(context, (context) => [
-  builduxThunk<User[], void>({
+export const userThunksRegistry = <T>(context: BuilduxContext<T>) => ({
+  fetchUsers: builduxThunk<User[]>({
     description: "Get user from API",
     reference: "/users",
     action: async () => {
-      // Read the service from context
+      //Read the service from context.
       const usersService = context.consumer.get(UsersService);
       const users = await usersService.getUsers();
       return users;
     },
   }),
-]);
+});
 ```
 
 ## Examples

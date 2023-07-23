@@ -26,7 +26,9 @@ function App() {
       </div>
       <h1>Read data from Json Placeholder with Buildux example</h1>
       <div className="card">
-        <a className="">Read the Docs</a>
+        <a target="_blank" href="https://docs.reprovider.com.ar/">
+          Read the Docs
+        </a>
       </div>
       <div className="table-container">
         {users ? (
@@ -40,12 +42,12 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user: User) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
+              {users.map(({ id, name, username, email }: User) => (
+                <tr key={id}>
+                  <td>{id}</td>
+                  <td>{name}</td>
+                  <td>{username}</td>
+                  <td>{email}</td>
                 </tr>
               ))}
             </tbody>

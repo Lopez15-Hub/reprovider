@@ -1,9 +1,9 @@
-import { builduxThunk, BuilduxContext } from "reprovider";
+import { BuilduxContext, builduxThunk } from "../../../../../../src/index";
 import { User } from "../../interfaces/user.interface";
 import { UsersService } from "../../services/users.service";
 
-export const userThunksRegistry = <T>(context: BuilduxContext<T>) => [
-  builduxThunk<User[], void>({
+export const userThunksRegistry = <T>(context: BuilduxContext<T>) => ({
+  fetchUsers: builduxThunk<User[]>({
     description: "Get user from API",
     reference: "/users",
     action: async () => {
@@ -12,4 +12,4 @@ export const userThunksRegistry = <T>(context: BuilduxContext<T>) => [
       return users;
     },
   }),
-];
+});

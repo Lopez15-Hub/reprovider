@@ -4,11 +4,10 @@ import {
   SliceCaseReducers,
 } from "@reduxjs/toolkit";
 import { Consumer } from "../reprovider";
-import { ThunkAction } from "./thunk-action.interface";
 
-export interface BuilduxContext<T> {
+export interface BuilduxContext<State, ThunksState = any> {
   consumer: Consumer;
-  reducer: Reducer<T>;
-  actions: CaseReducerActions<SliceCaseReducers<T>, string>;
-  thunks: ThunkAction[];
+  reducer: Reducer<State>;
+  actions: CaseReducerActions<SliceCaseReducers<State>, string>;
+  thunks: ThunksState;
 }

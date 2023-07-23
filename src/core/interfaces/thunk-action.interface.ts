@@ -1,3 +1,6 @@
 import { AsyncThunk } from "@reduxjs/toolkit";
-
-export type ThunkAction = AsyncThunk<any, void, any>;
+export type ThunkAction<Returned, Argument = void> = AsyncThunk<
+  Returned,
+  Argument,
+  any
+>;

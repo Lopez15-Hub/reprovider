@@ -1,4 +1,4 @@
-import { AsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { SliceCreator } from "../interfaces/slice-creator.interface";
 import {
   BaseQueryFn,
@@ -17,8 +17,8 @@ import { CreateReducerOptions } from "../interfaces/create-reducer-options.inter
  * @author Ezequiel López
  */
 
-export class Buildux<T> {
-  context: BuilduxContext<T>; //Context of our slice
+export class Buildux<T, ThunksType = any> {
+  context: BuilduxContext<T, ThunksType>; //Context of our slice
 
   /**
    * @param {SliceCreator<T>} creator - Initial config of Buildux. <T> is the state of slice.
@@ -30,7 +30,7 @@ export class Buildux<T> {
   constructor(private readonly creator: SliceCreator<T>) {
     this.context = {
       consumer: new Consumer(creator.services ?? []),
-      thunks: [],
+      thunks: {} as ThunksType,
       reducer: (state: any) => state,
       actions: {},
     };
@@ -38,19 +38,19 @@ export class Buildux<T> {
   /**
    * Register thunks and provide the context.
    * @param {BuilduxContext<T>} context - The Buildux Context
-   * @param {(context: BuilduxContext<T>) => AsyncThunk<any, void, any>[]} registerThunksCallback - context provider for thunks
+   * @param {(context: BuilduxContext<T>) => RegisteredThunk } registerThunksCallback - context provider for thunks
    */
-  thunksRegistry = async (
+  thunksRegistry = async <T, U>(
     context: BuilduxContext<T>,
-    registerThunksCallback: (
-      context: BuilduxContext<T>
-    ) => AsyncThunk<any, void, any>[]
+    registerThunksCallback: (context: BuilduxContext<T>) => U
   ) => {
     const thunks = registerThunksCallback(context);
-    this.context.thunks = thunks;
+
+    // Asigna los thunks al contexto
+    context.thunks = thunks;
+
     return this;
   };
-
   /**
    * Allows to create an api for work with RTK Query (Redux toolkit Query)
    * @param {CreateApiOptions<BaseQueryFn, EndpointDefinitions, string, never>} options - The api config you can read more here:  https://redux-toolkit.js.org/rtk-query/overview

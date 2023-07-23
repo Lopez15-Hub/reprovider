@@ -1,9 +1,9 @@
-import { Buildux } from "reprovider";
+import { Buildux } from "../../../../../../src/index";
 import { UsersState } from "../../interfaces/users-state.interface";
-import { ActionReducerMapBuilder, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../interfaces/user.interface";
-import { services } from "./users.registry";
+import { services } from "./users-services.registry";
 import { userThunksRegistry } from "./users-thunks.registry";
+import { UsersThunks } from "../../interfaces/users-thunks.interface";
+import { usersReducers } from "./users-reducers.registry";
 /**
  * Buildux creates a new Slice and then returns a context.
  * The context contains the reducer, actions and services
@@ -11,32 +11,28 @@ import { userThunksRegistry } from "./users-thunks.registry";
  * For create the state only we need pass the reference like this:
  * new Buildux<MyCurrentState>({})
  */
-const { context, thunksRegistry } = new Buildux<UsersState>({
+const { context, thunksRegistry, createReducers } = new Buildux<
+  UsersState,
+  UsersThunks
+>({
   name: "users",
+  
   services,
   initialState: {
     users: [],
   },
-}).createReducers({
-  reducers: {
-    setUsers: (state, payload: PayloadAction<User[]>) => {
-      state.users = payload.payload;
-    },
-  },
-  extraReducers(builder: ActionReducerMapBuilder<UsersState>) {
-    builder.addCase(
-      context.thunks[0].fulfilled,
-      (state, { payload }: PayloadAction<User[]>) => {
-        if (payload) state.users = payload;
-        console.log(state.users);
-      }
-    );
-  },
 });
+
+//For better organization, you can separate the reducers registry from the main file, making it easier to read and maintain.
+createReducers(usersReducers);
 
 thunksRegistry(context, userThunksRegistry);
 
-export const fetchUsers = context.thunks[0];
+// ThunksExports
+export const { fetchUsers } = context.thunks;
 
+// Actions exports
 export const { setUsers } = context.actions;
+
+// Reducer exports
 export const usersReducer = context.reducer;
